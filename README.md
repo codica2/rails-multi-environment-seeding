@@ -12,13 +12,14 @@ Using [SeedBank](https://github.com/james2m/seedbank) we can separate logic for 
 ```bash
 db/
   └── seeds/
-        ├── development/
-        |   └── *.seeds.rb 
-        ├── production/
-        |   └── *.seeds.rb
-        ├── seeds.rb
-        └── modules/
+    ├── development/
+    |   └── *.seeds.rb
+    ├── production/
+    |   └── *.seeds.rb
+    ├── seeds.rb
+    └── modules/
 ```
+
 Now you can run seeds in the scope of your environment; it's also a good idea to move common logic to modules and to include them to seeds files.
 
 ## Development environment
@@ -27,21 +28,20 @@ Commonly for populating development DB we use [Faker gem](https://github.com/sty
 in this case, we may ignore the data integrity.
 
 ```ruby
-    10.times do
-      User.create(name: Faker::FunnyName.two_word_name, email: Faker::Internet.email, password: 'password')
+  10.times do
+    User.create(name: Faker::FunnyName.two_word_name, email: Faker::Internet.email, password: 'password')
+  end
+
+  10.times do
+    category = Category.create(name: Faker::Coffee.variety)
+    5.times do
+      category.tags << Tag.create(name: Faker::Cat.name)
     end
-    
-    10.times do
-      category = Category.create(name: Faker::Coffee.variety)
-      5.times do
-        category.tags << Tag.create(name: Faker::Cat.name)
-      end
-    end
-    
-    100.times do
-      Post.create!(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph)
-    end
-     
+  end
+
+  100.times do
+    Post.create!(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph)
+  end
 ```
 
 ## Production environment
@@ -50,7 +50,6 @@ For production mode you need real data, we store them in CSV files on Google Doc
 
 ![CSV file example](images/csv_image.png)
 
-
 In a Header, we write attributes names, and each row is an object with attribute values. In this case, it is really easy to add, remove or change data.
 
 ```ruby
@@ -58,13 +57,13 @@ In a Header, we write attributes names, and each row is an object with attribute
       file = 'path_to_categories_csv'
       Category.create(extracted_params(file))
     end
-    
+
     def brands
       file = 'path_to_brands_csv'
       Brand.create(extracted_params(file))
     end
-        
 ```
+
 And inside of our extracted_params method we will parse CSV and create an array with params.
 
 ```ruby
@@ -76,12 +75,13 @@ And inside of our extracted_params method we will parse CSV and create an array 
     data_csv = URI.open(file).read
     CSV.parse(data_csv, headers: true)
   end
-
 ```
+
 Now we have DB with all the necessary data.
 
 ## Useful Gems
-[SeedBank](https://github.com/james2m/seedbank) - Seedbank gives your seed data a little structure. Create seeds for each environment, share seeds between environments and specify dependencies to load your seeds in order. 
+
+[SeedBank](https://github.com/james2m/seedbank) - Seedbank gives your seed data a little structure. Create seeds for each environment, share seeds between environments and specify dependencies to load your seeds in order.
 
 [Faker gem](https://github.com/stympy/faker) - A library for generating fake data such as names, addresses, and phone numbers
 
@@ -90,28 +90,11 @@ Now we have DB with all the necessary data.
 [seed-fu](https://github.com/mbleigh/seed-fu) - Advanced seed data handling for Rails, combining the best practices of several methods together
 
 ## License
-The MIT License (MIT)
 
-Copyright (c) 2018 [Codica](https://www.codica.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+seed-examples is Copyright © 2015-2018 Codica. It is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## About Codica
 
 [![Codica logo](https://www.codica.com/assets/images/logo/logo.svg)](https://www.codica.com)
+
+We love open source software! See [our other projects](https://github.com/codica2) or [hire us](https://www.codica.com/) to design, develop, and grow your product.
