@@ -91,7 +91,7 @@ Now we have DB with all the necessary data.
 
 ## License
 
-rails-multi-environment-seeding is Copyright © 2015-2018 Codica. It is released under the [MIT License](https://opensource.org/licenses/MIT).
+rails-multi-environment-seeding is Copyright © 2015-2019 Codica. It is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## About Codica
 
